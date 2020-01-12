@@ -16,7 +16,7 @@ public class MoneyTransferController {
     public String createAccount(String ownerName, String ownerPhoneNumber) {
         Person person = Person.create(ownerName, ownerPhoneNumber);
         if (personAccountMap.containsKey(person)) {
-            return null;
+            throw new IllegalArgumentException("Account already exist for provided person");
         }
         Account account = new Account(person);
         String newId = createNewId();

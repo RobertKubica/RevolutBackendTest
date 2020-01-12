@@ -1,11 +1,11 @@
 package com.mazurek.moneytransfer.rest;
 
+import com.mazurek.moneytransfer.MoneyTransferController;
 import com.mazurek.moneytransfer.model.Account;
 import com.mazurek.moneytransfer.model.Person;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.*;
 
 public class MoneyTransferControllerTest {
 
