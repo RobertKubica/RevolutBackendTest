@@ -2,7 +2,6 @@ package com.mazurek.moneytransfer.rest;
 
 import com.google.gson.Gson;
 import com.mazurek.moneytransfer.MoneyTransferController;
-import com.mazurek.moneytransfer.model.Account;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.PathTemplateMatch;
@@ -20,7 +19,7 @@ class GetAccountInfoHandler implements HttpHandler {
         PathTemplateMatch pathMatch = httpServerExchange.getAttachment(PathTemplateMatch.ATTACHMENT_KEY);
         String id = pathMatch.getParameters().get("id");
         Gson gson = new Gson();
-        String body = controller.getAccountById(id)
+        String body = controller.getAccountViewById(id)
                 .map(gson::toJson)
                 .orElse(null);
         if(body!=null){

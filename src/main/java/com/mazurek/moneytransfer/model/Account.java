@@ -2,7 +2,7 @@ package com.mazurek.moneytransfer.model;
 
 import java.math.BigDecimal;
 
-public class Account {
+public class Account implements AccountView {
 
     private final Person owner;
 
@@ -12,10 +12,12 @@ public class Account {
         this.owner = owner;
             }
 
+    @Override
     public Person getOwner() {
         return owner;
     }
 
+    @Override
     public BigDecimal getBalance() {
         return balance;
     }

@@ -2,6 +2,7 @@ package com.mazurek.moneytransfer.rest;
 
 import com.mazurek.moneytransfer.MoneyTransferController;
 import com.mazurek.moneytransfer.model.Account;
+import com.mazurek.moneytransfer.model.AccountView;
 import com.mazurek.moneytransfer.model.Person;
 import org.testng.annotations.Test;
 
@@ -13,7 +14,7 @@ public class MoneyTransferControllerTest {
     public void shouldCreateAccountCorrectly(){
         MoneyTransferController moneyTransferController = new MoneyTransferController();
         String accountId = moneyTransferController.createAccount("owner", "123456789");
-        Account accountById = moneyTransferController.getAccountById(accountId).get();
+        AccountView accountById = moneyTransferController.getAccountViewById(accountId).get();
 
         assertThat(accountById.getBalance()).isZero();
         assertThat(accountById.getOwner()).extracting(Person::getName, Person::getPhoneNumber)
