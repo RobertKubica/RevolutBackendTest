@@ -63,4 +63,12 @@ public class PersonTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("%s is not correct phone number", phoneNumber));
     }
+
+    @Test
+    public void personsWithSameNameAndPhoneNumberShouldBeEqual(){
+        Person firstPerson = Person.create("abc", "123456789");
+        Person secondPerson = Person.create("abc", "123456789");
+
+        assertThat(firstPerson).isEqualTo(secondPerson);
+    }
 }

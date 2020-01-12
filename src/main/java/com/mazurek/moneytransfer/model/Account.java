@@ -6,7 +6,7 @@ public class Account {
 
     private final Person owner;
 
-    private BigDecimal balance;
+    private BigDecimal balance = BigDecimal.ZERO;
 
     public Account(Person owner) {
         this.owner = owner;
@@ -23,4 +23,6 @@ public class Account {
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
+
+
 }

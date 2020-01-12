@@ -2,6 +2,7 @@ package com.mazurek.moneytransfer.model;
 
 import com.google.common.base.Preconditions;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Person {
@@ -39,5 +40,19 @@ public class Person {
         Pattern pattern = Pattern.compile("(\\+?\\d{2})?\\d{8,9}");
         Preconditions.checkArgument(pattern.matcher(phoneNumber).matches(), String.format("%s is not correct phone number", phoneNumber));
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return name.equals(person.name) &&
+                phoneNumber.equals(person.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, phoneNumber);
     }
 }
