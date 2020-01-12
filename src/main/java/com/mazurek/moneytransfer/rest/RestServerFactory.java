@@ -3,7 +3,7 @@ package com.mazurek.moneytransfer.rest;
 import com.mazurek.moneytransfer.MoneyTransferController;
 import io.undertow.Handlers;
 import io.undertow.Undertow;
-import io.undertow.server.handlers.PathTemplateHandler;
+import io.undertow.server.RoutingHandler;
 
 public class RestServerFactory {
     private final MoneyTransferController controller;
@@ -13,11 +13,12 @@ public class RestServerFactory {
     }
 
     public Undertow createServer() {
-        PathTemplateHandler pathTemplateHandler = Handlers.pathTemplate();
-        pathTemplateHandler.add("account", new CreateAccountHandler(controller));
+        RoutingHandler routingHandler = Handlers.routing()
+                .add("POST", "/account", new CreateAccountHandler(controller))
+                .add("GET", "/account/{id}", new GetAccountInfoHandler(controller));
         return Undertow.builder()
                 .addHttpListener(8080, "localhost")
-                .setHandler(pathTemplateHandler).build();
+                .setHandler(routingHandler).build();
     }
 
 }

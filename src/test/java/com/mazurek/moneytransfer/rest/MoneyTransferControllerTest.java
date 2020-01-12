@@ -13,7 +13,7 @@ public class MoneyTransferControllerTest {
     public void shouldCreateAccountCorrectly(){
         MoneyTransferController moneyTransferController = new MoneyTransferController();
         String accountId = moneyTransferController.createAccount("owner", "123456789");
-        Account accountById = moneyTransferController.getAccountById(accountId);
+        Account accountById = moneyTransferController.getAccountById(accountId).get();
 
         assertThat(accountById.getBalance()).isZero();
         assertThat(accountById.getOwner()).extracting(Person::getName, Person::getPhoneNumber)

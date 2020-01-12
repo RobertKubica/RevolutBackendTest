@@ -5,6 +5,7 @@ import com.mazurek.moneytransfer.model.Person;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MoneyTransferController {
@@ -25,8 +26,8 @@ public class MoneyTransferController {
         return newId;
     }
 
-    public Account getAccountById(String id) {
-        return accounts.get(id);
+    public Optional<Account> getAccountById(String id) {
+        return Optional.ofNullable(accounts.get(id));
     }
 
     private String createNewId() {
