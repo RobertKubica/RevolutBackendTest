@@ -73,7 +73,7 @@ public class ServerTest {
         CloseableHttpResponse response = httpClient.execute(post);
         String responseBody = readResponseBody(response);
         System.out.println(String.format("Received response: %s", responseBody));
-        if(response.getStatusLine().getStatusCode()!=200){
+        if (response.getStatusLine().getStatusCode() != 200) {
             return null;
         }
         return gson.fromJson(responseBody, responseClass);

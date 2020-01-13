@@ -49,7 +49,7 @@ public class PersonTest {
     }
 
     @Test(dataProvider = "incorrectNames")
-    public void shouldThrowIllegalArgumentExceptionOnIncorrectName(String name){
+    public void shouldThrowIllegalArgumentExceptionOnIncorrectName(String name) {
         String correctPhoneNumber = "+48123456789";
         assertThatThrownBy(() -> Person.create(name, correctPhoneNumber))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -57,7 +57,7 @@ public class PersonTest {
     }
 
     @Test(dataProvider = "incorrectPhoneNumbers")
-    public void shouldThrowIllegalArgumentExceptionOnIncorrectPhoneNumbers(String phoneNumber){
+    public void shouldThrowIllegalArgumentExceptionOnIncorrectPhoneNumbers(String phoneNumber) {
         String correctName = "John Smith";
         assertThatThrownBy(() -> Person.create(correctName, phoneNumber))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -65,7 +65,7 @@ public class PersonTest {
     }
 
     @Test
-    public void personsWithSameNameAndPhoneNumberShouldBeEqual(){
+    public void personsWithSameNameAndPhoneNumberShouldBeEqual() {
         Person firstPerson = Person.create("abc", "123456789");
         Person secondPerson = Person.create("abc", "123456789");
 

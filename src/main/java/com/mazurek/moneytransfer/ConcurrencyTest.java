@@ -4,8 +4,6 @@ import com.mazurek.moneytransfer.model.AccountView;
 
 import java.math.BigDecimal;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Semaphore;
 
 public class ConcurrencyTest {
     public static void main(String[] args) throws InterruptedException {
