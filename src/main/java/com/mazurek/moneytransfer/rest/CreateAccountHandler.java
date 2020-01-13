@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.mazurek.moneytransfer.MoneyTransferController;
 import com.mazurek.moneytransfer.rest.requests.CreateAccountRequest;
 import com.mazurek.moneytransfer.rest.responses.CreateAccountResponse;
-import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;

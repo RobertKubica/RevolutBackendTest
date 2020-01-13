@@ -10,7 +10,7 @@ public class Account implements AccountView {
 
     public Account(Person owner) {
         this.owner = owner;
-            }
+    }
 
     @Override
     public Person getOwner() {

@@ -22,10 +22,11 @@ class GetAccountInfoHandler implements HttpHandler {
         String body = controller.getAccountViewById(id)
                 .map(gson::toJson)
                 .orElse(null);
-        if(body!=null){
+
+        if (body != null) {
             httpServerExchange.setStatusCode(StatusCodes.OK);
             httpServerExchange.getResponseSender().send(body);
-        }else{
+        } else {
             httpServerExchange.setStatusCode(StatusCodes.NOT_FOUND);
             httpServerExchange.getResponseSender().send(String.format("Couldn't find account for id: %s", id));
         }

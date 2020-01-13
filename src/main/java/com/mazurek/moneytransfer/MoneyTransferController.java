@@ -24,7 +24,7 @@ public class MoneyTransferController {
         this.personAccountMap = initializeMap();
     }
 
-    protected <K,V> Map<K,V> initializeMap() {
+    protected <K, V> Map<K, V> initializeMap() {
         return new HashMap<>();
     }
 
@@ -44,16 +44,16 @@ public class MoneyTransferController {
         return Optional.ofNullable(accounts.get(id));
     }
 
-    public void deposit(String id, BigDecimal amount){
+    public void deposit(String id, BigDecimal amount) {
         validateAmount(amount);
         Account account = accounts.get(id);
         account.setBalance(account.getBalance().add(amount));
     }
 
-    public void withdraw(String id, BigDecimal amount){
+    public void withdraw(String id, BigDecimal amount) {
         validateAmount(amount);
         Account account = accounts.get(id);
-        if(account.getBalance().compareTo(amount)<0){
+        if (account.getBalance().compareTo(amount) < 0) {
             throw new IllegalArgumentException(String.format("Balance is too low to withdraw: %s", amount));
         }
         account.setBalance(account.getBalance().subtract(amount));
@@ -62,7 +62,7 @@ public class MoneyTransferController {
     public void transfer(String sourceId, String targetId, BigDecimal amount) {
         validateAmount(amount);
         Account sourceAccount = accounts.get(sourceId);
-        if(sourceAccount.getBalance().compareTo(amount)<0){
+        if (sourceAccount.getBalance().compareTo(amount) < 0) {
             throw new IllegalArgumentException(String.format("Balance is too low to transfer: %s", amount));
         }
 

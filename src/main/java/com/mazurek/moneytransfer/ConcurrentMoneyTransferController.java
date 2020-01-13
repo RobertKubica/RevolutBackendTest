@@ -1,11 +1,8 @@
 package com.mazurek.moneytransfer;
 
-import com.mazurek.moneytransfer.model.AccountView;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

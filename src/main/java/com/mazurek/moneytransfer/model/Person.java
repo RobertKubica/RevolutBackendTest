@@ -15,7 +15,7 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    public static Person create(String name, String phoneNumber){
+    public static Person create(String name, String phoneNumber) {
         validateName(name);
         validatePhoneNumber(phoneNumber);
         return new Person(name, phoneNumber);
