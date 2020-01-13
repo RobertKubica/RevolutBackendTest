@@ -3,14 +3,13 @@ package com.mazurek.moneytransfer.rest;
 import com.mazurek.moneytransfer.MoneyTransferController;
 import com.mazurek.moneytransfer.rest.requests.BalanceChangeRequest;
 
-public class DepositHandler extends BalanceChangeHandler {
-
-    public DepositHandler(MoneyTransferController controller) {
+public class WithdrawHandler extends BalanceChangeHandler {
+    public WithdrawHandler(MoneyTransferController controller) {
         super(controller);
     }
 
     @Override
     protected void invokeBalanceChange(BalanceChangeRequest balanceChangeRequest) {
-        controller.deposit(balanceChangeRequest.getAccountId(), balanceChangeRequest.getAmount());
+        controller.withdraw(balanceChangeRequest.getAccountId(), balanceChangeRequest.getAmount());
     }
 }
