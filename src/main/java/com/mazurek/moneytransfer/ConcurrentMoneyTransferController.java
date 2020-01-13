@@ -38,7 +38,7 @@ public class ConcurrentMoneyTransferController extends MoneyTransferController {
 
     @Override
     public void withdraw(String id, BigDecimal amount) {
-        Lock lock = lockMap.get(id);
+        Lock lock = lockMap.getOrDefault(id, new ReentrantLock());
         try {
             lock.lock();
             super.withdraw(id, amount);

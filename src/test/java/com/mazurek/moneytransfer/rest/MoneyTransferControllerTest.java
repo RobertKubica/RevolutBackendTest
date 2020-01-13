@@ -24,7 +24,7 @@ public class MoneyTransferControllerTest {
     @Test
     public void shouldCreateAccountCorrectly() {
         String accountId = createSampleAccount("owner");
-        AccountView accountById = moneyTransferController.getAccountViewById(accountId).get();
+        AccountView accountById = moneyTransferController.getAccountViewById(accountId);
 
         assertThat(accountById.getBalance()).isZero();
         assertThat(accountById.getOwner()).extracting(Person::getName, Person::getPhoneNumber)
@@ -53,7 +53,7 @@ public class MoneyTransferControllerTest {
     public void shouldDepositMoneyCorrectly() {
         String accountId = createSampleAccount("owner");
         moneyTransferController.deposit(accountId, BigDecimal.valueOf(1400));
-        AccountView accountViewById = moneyTransferController.getAccountViewById(accountId).get();
+        AccountView accountViewById = moneyTransferController.getAccountViewById(accountId);
 
         assertThat(accountViewById.getBalance()).isEqualTo(BigDecimal.valueOf(1400));
     }
@@ -72,7 +72,7 @@ public class MoneyTransferControllerTest {
         String accountId = createSampleAccount("owner");
         moneyTransferController.deposit(accountId, BigDecimal.valueOf(100));
         moneyTransferController.withdraw(accountId, BigDecimal.valueOf(50));
-        AccountView accountView = moneyTransferController.getAccountViewById(accountId).get();
+        AccountView accountView = moneyTransferController.getAccountViewById(accountId);
 
         assertThat(accountView.getBalance()).isEqualTo(BigDecimal.valueOf(50));
     }

@@ -1,4 +1,4 @@
-package com.mazurek.moneytransfer.rest;
+package com.mazurek.moneytransfer.rest.requests;
 
 import java.math.BigDecimal;
 

@@ -1,8 +1,10 @@
 package com.mazurek.moneytransfer.rest;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.mazurek.moneytransfer.MoneyTransferController;
+import com.mazurek.moneytransfer.model.AccountView;
 import com.mazurek.moneytransfer.rest.requests.BalanceChangeRequest;
 import com.mazurek.moneytransfer.rest.responses.BalanceResponse;
 import io.undertow.server.HttpHandler;
@@ -34,19 +36,17 @@ public abstract class BalanceChangeHandler implements HttpHandler {
 
             invokeBalanceChange(balanceChangeRequest);
 
-            BalanceResponse response = controller.getAccountViewById(balanceChangeRequest.getAccountId())
-                    .map(v -> {
-                        BalanceResponse balanceResponse = new BalanceResponse();
-                        balanceResponse.setBalance(v.getBalance());
-                        balanceResponse.setAccountId(balanceChangeRequest.getAccountId());
-                        return balanceResponse;
-                    }).orElseThrow(() -> new RuntimeException(String.format("Couldn't find account with id: %s", balanceChangeRequest.getAccountId())));
+            AccountView accountView = controller.getAccountViewById(balanceChangeRequest.getAccountId());
+            BalanceResponse balanceResponse = new BalanceResponse();
+            balanceResponse.setBalance(accountView.getBalance());
+            balanceResponse.setAccountId(balanceChangeRequest.getAccountId());
 
             httpServerExchange.setStatusCode(StatusCodes.OK);
-            httpServerExchange.getResponseSender().send(gson.toJson(response));
+            httpServerExchange.getResponseSender().send(gson.toJson(balanceResponse));
         } catch (Exception ex) {
             httpServerExchange.setStatusCode(StatusCodes.BAD_REQUEST);
-            httpServerExchange.getResponseSender().send(ex.getMessage());
+            String message = Strings.nullToEmpty(ex.getMessage());
+            httpServerExchange.getResponseSender().send(message);
         }
     }
 

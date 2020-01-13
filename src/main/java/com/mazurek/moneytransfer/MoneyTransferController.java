@@ -40,33 +40,37 @@ public class MoneyTransferController {
         return newId;
     }
 
-    public Optional<AccountView> getAccountViewById(String id) {
-        return Optional.ofNullable(accounts.get(id));
+    public AccountView getAccountViewById(String id) {
+        return getAccount(id);
     }
 
     public void deposit(String id, BigDecimal amount) {
         validateAmount(amount);
-        Account account = accounts.get(id);
+        Account account = getAccount(id);
         account.setBalance(account.getBalance().add(amount));
     }
 
     public void withdraw(String id, BigDecimal amount) {
         validateAmount(amount);
-        Account account = accounts.get(id);
+        Account account = getAccount(id);
         if (account.getBalance().compareTo(amount) < 0) {
             throw new IllegalArgumentException(String.format("Balance is too low to withdraw: %s", amount));
         }
         account.setBalance(account.getBalance().subtract(amount));
     }
 
+    private Account getAccount(String id) {
+        return Optional.ofNullable(accounts.get(id)).orElseThrow(() -> new IllegalArgumentException(String.format("Account with id %s doesn't exist", id)));
+    }
+
     public void transfer(String sourceId, String targetId, BigDecimal amount) {
         validateAmount(amount);
-        Account sourceAccount = accounts.get(sourceId);
+        Account sourceAccount = getAccount(sourceId);
         if (sourceAccount.getBalance().compareTo(amount) < 0) {
             throw new IllegalArgumentException(String.format("Balance is too low to transfer: %s", amount));
         }
 
-        Account targetAccount = accounts.get(targetId);
+        Account targetAccount = getAccount(targetId);
         sourceAccount.setBalance(sourceAccount.getBalance().subtract(amount));
         targetAccount.setBalance(targetAccount.getBalance().add(amount));
 

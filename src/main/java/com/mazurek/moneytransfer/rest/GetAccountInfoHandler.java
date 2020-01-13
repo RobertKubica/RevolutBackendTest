@@ -2,6 +2,7 @@ package com.mazurek.moneytransfer.rest;
 
 import com.google.gson.Gson;
 import com.mazurek.moneytransfer.MoneyTransferController;
+import com.mazurek.moneytransfer.model.AccountView;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.PathTemplateMatch;
@@ -19,16 +20,13 @@ class GetAccountInfoHandler implements HttpHandler {
         PathTemplateMatch pathMatch = httpServerExchange.getAttachment(PathTemplateMatch.ATTACHMENT_KEY);
         String id = pathMatch.getParameters().get("id");
         Gson gson = new Gson();
-        String body = controller.getAccountViewById(id)
-                .map(gson::toJson)
-                .orElse(null);
-
-        if (body != null) {
+        try {
+            AccountView body = controller.getAccountViewById(id);
             httpServerExchange.setStatusCode(StatusCodes.OK);
-            httpServerExchange.getResponseSender().send(body);
-        } else {
+            httpServerExchange.getResponseSender().send(gson.toJson(body));
+        } catch (Exception ex) {
             httpServerExchange.setStatusCode(StatusCodes.NOT_FOUND);
-            httpServerExchange.getResponseSender().send(String.format("Couldn't find account for id: %s", id));
+            httpServerExchange.getResponseSender().send(String.format("Couldn't find account for id: %s (%s)", id, ex.getMessage()));
         }
     }
 }

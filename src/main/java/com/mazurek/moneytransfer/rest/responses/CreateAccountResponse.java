@@ -6,4 +6,8 @@ public class CreateAccountResponse {
     public CreateAccountResponse(String accountId) {
         this.accountId = accountId;
     }
+
+    public String getAccountId() {
+        return accountId;
+    }
 }
