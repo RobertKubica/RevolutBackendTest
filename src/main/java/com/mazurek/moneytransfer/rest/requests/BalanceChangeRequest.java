@@ -14,5 +14,11 @@ public class BalanceChangeRequest implements Request {
         return amount;
     }
 
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
 
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 }

@@ -14,7 +14,7 @@ public abstract class BalanceChangeHandler extends AbstractPostHandler<BalanceCh
 
 
     @Override
-    Response invokeOkAction(BalanceChangeRequest request) {
+    BalanceResponse invokeOkAction(BalanceChangeRequest request) {
         invokeBalanceChange(request);
 
         Account accountView = moneyTransferController.getAccount(request.getAccountId());
@@ -26,13 +26,13 @@ public abstract class BalanceChangeHandler extends AbstractPostHandler<BalanceCh
     }
 
     protected void validateRequest(BalanceChangeRequest balanceChangeRequest) {
-        Preconditions.checkNotNull(balanceChangeRequest.getAccountId(), "Account id cannot be null");
-        Preconditions.checkNotNull(balanceChangeRequest.getAmount(), "Amount cannot be null");
+        Preconditions.checkArgument(balanceChangeRequest.getAccountId() != null, "Account id cannot be null");
+        Preconditions.checkArgument(balanceChangeRequest.getAmount() != null, "Amount cannot be null");
     }
 
     @Override
     BalanceChangeRequest parseRequest(String body) {
-        return gson.fromJson(body,BalanceChangeRequest.class);
+        return gson.fromJson(body, BalanceChangeRequest.class);
     }
 
     protected abstract void invokeBalanceChange(BalanceChangeRequest balanceChangeRequest);
