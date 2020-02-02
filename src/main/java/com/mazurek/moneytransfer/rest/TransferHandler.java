@@ -5,7 +5,6 @@ import com.mazurek.moneytransfer.MoneyTransferController;
 import com.mazurek.moneytransfer.model.Account;
 import com.mazurek.moneytransfer.rest.requests.TransferRequest;
 import com.mazurek.moneytransfer.rest.responses.BalanceResponse;
-import com.mazurek.moneytransfer.rest.responses.Response;
 
 public class TransferHandler extends AbstractPostHandler<TransferRequest> {
     public TransferHandler(MoneyTransferController controller) {
@@ -13,7 +12,7 @@ public class TransferHandler extends AbstractPostHandler<TransferRequest> {
     }
 
     @Override
-    Response invokeOkAction(TransferRequest request) {
+    BalanceResponse invokeOkAction(TransferRequest request) {
         moneyTransferController.transfer(request.getSourceAccountId(), request.getTargetAccountId(), request.getAmount());
 
         Account accountView = moneyTransferController.getAccount(request.getSourceAccountId());
@@ -26,14 +25,14 @@ public class TransferHandler extends AbstractPostHandler<TransferRequest> {
 
     @Override
     TransferRequest parseRequest(String body) {
-        return gson.fromJson(body,TransferRequest.class);
+        return gson.fromJson(body, TransferRequest.class);
     }
 
     @Override
     protected void validateRequest(TransferRequest transferRequest) {
-        Preconditions.checkNotNull(transferRequest.getSourceAccountId(), "Source account cannot be null");
-        Preconditions.checkNotNull(transferRequest.getTargetAccountId(), "Target account cannot be null");
-        Preconditions.checkNotNull(transferRequest.getAmount(), "Amount cannot be null");
+        Preconditions.checkArgument(transferRequest.getSourceAccountId() != null, "Source account cannot be null");
+        Preconditions.checkArgument(transferRequest.getTargetAccountId() != null, "Target account cannot be null");
+        Preconditions.checkArgument(transferRequest.getAmount() != null, "Amount cannot be null");
     }
 
 }

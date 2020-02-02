@@ -18,4 +18,16 @@ public class TransferRequest implements Request{
     public BigDecimal getAmount() {
         return amount;
     }
+
+    public void setSourceAccountId(String sourceAccountId) {
+        this.sourceAccountId = sourceAccountId;
+    }
+
+    public void setTargetAccountId(String targetAccountId) {
+        this.targetAccountId = targetAccountId;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 }
