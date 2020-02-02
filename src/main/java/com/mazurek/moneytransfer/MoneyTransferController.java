@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MoneyTransferController {
-    private AtomicInteger idCounter = new AtomicInteger(0);
+    private AtomicInteger idCounter;
 
     protected final Map<String, Account> accounts;
 
