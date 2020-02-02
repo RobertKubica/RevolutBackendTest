@@ -1,6 +1,6 @@
 package com.mazurek.moneytransfer.rest.responses;
 
-public class CreateAccountResponse {
+public class CreateAccountResponse implements Response {
     private final String accountId;
 
     public CreateAccountResponse(String accountId) {

@@ -2,7 +2,7 @@ package com.mazurek.moneytransfer.rest.responses;
 
 import java.math.BigDecimal;
 
-public class BalanceResponse {
+public class BalanceResponse implements Response{
     private String accountId;
     private BigDecimal balance;
 

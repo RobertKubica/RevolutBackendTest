@@ -1,6 +1,6 @@
 package com.mazurek.moneytransfer.rest.requests;
 
-public class CreateAccountRequest {
+public class CreateAccountRequest implements Request {
     private String owner;
     private String phoneNumber;
 

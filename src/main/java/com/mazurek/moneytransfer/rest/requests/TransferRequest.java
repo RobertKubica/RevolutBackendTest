@@ -2,7 +2,7 @@ package com.mazurek.moneytransfer.rest.requests;
 
 import java.math.BigDecimal;
 
-public class TransferRequest {
+public class TransferRequest implements Request{
     private String sourceAccountId;
     private String targetAccountId;
     private BigDecimal amount;
