@@ -13,4 +13,6 @@ public class BalanceChangeRequest implements Request {
     public BigDecimal getAmount() {
         return amount;
     }
+
+
 }

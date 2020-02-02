@@ -11,4 +11,12 @@ public class CreateAccountRequest implements Request {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
