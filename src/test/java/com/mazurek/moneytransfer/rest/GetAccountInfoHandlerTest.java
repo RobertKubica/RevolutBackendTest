@@ -59,7 +59,7 @@ public class GetAccountInfoHandlerTest {
 
         assertThatThrownBy(() -> handler.validateRequest(request))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Account id cannot be null");
+                .hasMessage("Id cannot be null");
 
     }
 }

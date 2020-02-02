@@ -1,5 +1,6 @@
 package com.mazurek.moneytransfer.rest;
 
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.mazurek.moneytransfer.MoneyTransferController;
 import com.mazurek.moneytransfer.rest.exceptions.ResourceNotFoundException;
@@ -29,19 +30,22 @@ public abstract class AbstractHandler<T extends Request> implements HttpHandler 
         T createAccountRequest = getData(httpServerExchange);
         try {
             validateRequest(createAccountRequest);
-            Object response = invokeOkAction(createAccountRequest);
+            Response response = invokeOkAction(createAccountRequest);
             httpServerExchange.setStatusCode(StatusCodes.OK);
             httpServerExchange.getResponseSender().send(gson.toJson(response));
         } catch (IllegalArgumentException ex) {
-            httpServerExchange.setStatusCode(StatusCodes.BAD_REQUEST);
-            httpServerExchange.getResponseSender().send(ex.getMessage());
+            handleException(httpServerExchange, ex, StatusCodes.BAD_REQUEST);
         } catch (ResourceNotFoundException ex) {
-            httpServerExchange.setStatusCode(StatusCodes.NOT_FOUND);
-            httpServerExchange.getResponseSender().send(ex.getMessage());
+            handleException(httpServerExchange, ex, StatusCodes.NOT_FOUND);
         } catch (Exception ex) {
-            httpServerExchange.setStatusCode(StatusCodes.INTERNAL_SERVER_ERROR);
-            httpServerExchange.getResponseSender().send(ex.getMessage());
+            handleException(httpServerExchange, ex, StatusCodes.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    void handleException(HttpServerExchange httpServerExchange, Exception ex, int internalServerError) {
+        httpServerExchange.setStatusCode(internalServerError);
+        String message = Strings.nullToEmpty(ex.getMessage());
+        httpServerExchange.getResponseSender().send(message);
     }
 
     abstract T getData(HttpServerExchange httpServerExchange) throws IOException;

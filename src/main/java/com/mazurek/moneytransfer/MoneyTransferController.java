@@ -3,6 +3,7 @@ package com.mazurek.moneytransfer;
 import com.google.common.base.Preconditions;
 import com.mazurek.moneytransfer.model.Account;
 import com.mazurek.moneytransfer.model.Person;
+import com.mazurek.moneytransfer.rest.exceptions.ResourceNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class MoneyTransferController {
     }
 
     public Account getAccount(String id) {
-        return Optional.ofNullable(accounts.get(id)).orElseThrow(() -> new IllegalArgumentException(String.format("Account with id %s doesn't exist", id)));
+        return Optional.ofNullable(accounts.get(id)).orElseThrow(() -> new ResourceNotFoundException(String.format("Account with id %s doesn't exist", id)));
     }
 
     public void transfer(String sourceId, String targetId, BigDecimal amount) {
