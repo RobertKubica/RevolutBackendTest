@@ -13,11 +13,11 @@ public class AccountViewResponse implements Response{
         this.owner = owner;
     }
 
-    Person getOwner() {
+    public Person getOwner() {
         return owner;
     }
 
-    BigDecimal getBalance(){
+    public BigDecimal getBalance(){
         return balance;
     }
 }

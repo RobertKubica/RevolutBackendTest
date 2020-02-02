@@ -21,8 +21,8 @@ class GetAccountInfoHandler extends AbstractGetHandler<GetAccountInfoRequest> {
 
 
     @Override
-    Response invokeOkAction(GetAccountInfoRequest request) {
-        Account body = moneyTransferController.getAccount(request.id);
+    AccountViewResponse invokeOkAction(GetAccountInfoRequest request) {
+        Account body = moneyTransferController.getAccount(request.getId());
         return new AccountViewResponse(body.getBalance(), body.getOwner());
     }
 
