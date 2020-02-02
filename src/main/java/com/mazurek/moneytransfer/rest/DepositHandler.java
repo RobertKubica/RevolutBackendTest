@@ -11,6 +11,6 @@ public class DepositHandler extends BalanceChangeHandler {
 
     @Override
     protected void invokeBalanceChange(BalanceChangeRequest balanceChangeRequest) {
-        controller.deposit(balanceChangeRequest.getAccountId(), balanceChangeRequest.getAmount());
+        moneyTransferController.deposit(balanceChangeRequest.getAccountId(), balanceChangeRequest.getAmount());
     }
 }

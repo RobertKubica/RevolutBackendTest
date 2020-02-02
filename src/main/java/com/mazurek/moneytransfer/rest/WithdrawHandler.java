@@ -10,6 +10,6 @@ public class WithdrawHandler extends BalanceChangeHandler {
 
     @Override
     protected void invokeBalanceChange(BalanceChangeRequest balanceChangeRequest) {
-        controller.withdraw(balanceChangeRequest.getAccountId(), balanceChangeRequest.getAmount());
+        moneyTransferController.withdraw(balanceChangeRequest.getAccountId(), balanceChangeRequest.getAmount());
     }
 }

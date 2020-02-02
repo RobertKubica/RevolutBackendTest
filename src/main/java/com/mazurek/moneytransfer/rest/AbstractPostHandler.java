@@ -1,6 +1,7 @@
 package com.mazurek.moneytransfer.rest;
 
 import com.google.gson.Gson;
+import com.mazurek.moneytransfer.MoneyTransferController;
 import com.mazurek.moneytransfer.rest.exceptions.ResourceNotFoundException;
 import com.mazurek.moneytransfer.rest.requests.Request;
 import com.mazurek.moneytransfer.rest.responses.Response;
@@ -11,8 +12,14 @@ import org.apache.commons.io.IOUtils;
 
 import java.nio.charset.Charset;
 
-public abstract class AbstractHandler<T extends Request> implements HttpHandler {
+public abstract class AbstractPostHandler<T extends Request> implements HttpHandler {
     protected final Gson gson = new Gson();
+    protected final MoneyTransferController moneyTransferController;
+
+    protected AbstractPostHandler(MoneyTransferController moneyTransferController) {
+        this.moneyTransferController = moneyTransferController;
+    }
+
 
     @Override
     public void handleRequest(HttpServerExchange httpServerExchange) throws Exception {

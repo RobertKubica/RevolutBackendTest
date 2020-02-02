@@ -1,42 +1,33 @@
 package com.mazurek.moneytransfer.rest;
 
-import com.google.gson.Gson;
+import com.google.common.base.Preconditions;
 import com.mazurek.moneytransfer.MoneyTransferController;
 import com.mazurek.moneytransfer.rest.requests.CreateAccountRequest;
 import com.mazurek.moneytransfer.rest.responses.CreateAccountResponse;
-import io.undertow.server.HttpHandler;
-import io.undertow.server.HttpServerExchange;
-import io.undertow.util.StatusCodes;
-import org.apache.commons.io.IOUtils;
+import com.mazurek.moneytransfer.rest.responses.Response;
 
-import java.nio.charset.Charset;
-
-class CreateAccountHandler implements HttpHandler {
-    private final MoneyTransferController controller;
-
+class CreateAccountHandler extends AbstractPostHandler<CreateAccountRequest> {
     CreateAccountHandler(MoneyTransferController controller) {
-        this.controller = controller;
+        super(controller);
+    }
+
+
+    @Override
+    Response invokeOkAction(CreateAccountRequest createAccountRequest) {
+        String accountId = moneyTransferController.createAccount(createAccountRequest.getOwner(), createAccountRequest.getPhoneNumber());
+        CreateAccountResponse response = new CreateAccountResponse(accountId);
+        return response;
     }
 
     @Override
-    public void handleRequest(HttpServerExchange httpServerExchange) throws Exception {
-        if (httpServerExchange.isInIoThread()) {
-            httpServerExchange.dispatch(this);
-            return;
-        }
-        httpServerExchange.startBlocking();
-        String body = IOUtils.toString(httpServerExchange.getInputStream(), Charset.defaultCharset());
-        Gson gson = new Gson();
-        CreateAccountRequest createAccountRequest = gson.fromJson(body, CreateAccountRequest.class);
-        try {
-            String accountId = controller.createAccount(createAccountRequest.getOwner(), createAccountRequest.getPhoneNumber());
-            CreateAccountResponse response = new CreateAccountResponse(accountId);
-            httpServerExchange.setStatusCode(StatusCodes.OK);
-            httpServerExchange.getResponseSender().send(gson.toJson(response));
-        } catch (Exception ex) {
-            httpServerExchange.setStatusCode(StatusCodes.BAD_REQUEST);
-            httpServerExchange.getResponseSender().send(ex.getMessage());
-        }
+    CreateAccountRequest parseRequest(String body) {
+        return gson.fromJson(body, CreateAccountRequest.class);
+    }
+
+    @Override
+    void validateRequest(CreateAccountRequest request) throws IllegalArgumentException {
+        Preconditions.checkArgument(request.getOwner()!=null,"Owner cannot be null");
+        Preconditions.checkArgument(request.getPhoneNumber()!=null,"Phone number cannot be null");
     }
 
 
