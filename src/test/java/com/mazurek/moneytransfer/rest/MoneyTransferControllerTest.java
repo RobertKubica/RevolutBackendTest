@@ -1,7 +1,7 @@
 package com.mazurek.moneytransfer.rest;
 
 import com.mazurek.moneytransfer.MoneyTransferController;
-import com.mazurek.moneytransfer.model.AccountView;
+import com.mazurek.moneytransfer.model.Account;
 import com.mazurek.moneytransfer.model.Person;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -23,7 +23,7 @@ public class MoneyTransferControllerTest {
     @Test
     public void shouldCreateAccountCorrectly() {
         String accountId = createSampleAccount("owner");
-        AccountView accountById = moneyTransferController.getAccountViewById(accountId);
+        Account accountById = moneyTransferController.getAccount(accountId);
 
         assertThat(accountById.getBalance()).isZero();
         assertThat(accountById.getOwner()).extracting(Person::getName, Person::getPhoneNumber)
@@ -52,9 +52,9 @@ public class MoneyTransferControllerTest {
     public void shouldDepositMoneyCorrectly() {
         String accountId = createSampleAccount("owner");
         moneyTransferController.deposit(accountId, BigDecimal.valueOf(1400));
-        AccountView accountViewById = moneyTransferController.getAccountViewById(accountId);
+        Account Account = moneyTransferController.getAccount(accountId);
 
-        assertThat(accountViewById.getBalance()).isEqualTo(BigDecimal.valueOf(1400));
+        assertThat(Account.getBalance()).isEqualTo(BigDecimal.valueOf(1400));
     }
 
     @Test
@@ -71,9 +71,9 @@ public class MoneyTransferControllerTest {
         String accountId = createSampleAccount("owner");
         moneyTransferController.deposit(accountId, BigDecimal.valueOf(100));
         moneyTransferController.withdraw(accountId, BigDecimal.valueOf(50));
-        AccountView accountView = moneyTransferController.getAccountViewById(accountId);
+        Account Account = moneyTransferController.getAccount(accountId);
 
-        assertThat(accountView.getBalance()).isEqualTo(BigDecimal.valueOf(50));
+        assertThat(Account.getBalance()).isEqualTo(BigDecimal.valueOf(50));
     }
 
     @Test

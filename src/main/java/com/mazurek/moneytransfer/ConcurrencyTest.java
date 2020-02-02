@@ -1,6 +1,6 @@
 package com.mazurek.moneytransfer;
 
-import com.mazurek.moneytransfer.model.AccountView;
+import com.mazurek.moneytransfer.model.Account;
 
 import java.math.BigDecimal;
 import java.util.concurrent.CountDownLatch;
@@ -17,7 +17,7 @@ public class ConcurrencyTest {
         Thread adamThread = new Thread(() -> {
             for (int i = 0; i < 1000; i++) {
                 concurrentMoneyTransferController.transfer(adamSmith, johnSmith, BigDecimal.valueOf(10));
-                AccountView accountViewById = concurrentMoneyTransferController.getAccountViewById(adamSmith);
+                Account accountViewById = concurrentMoneyTransferController.getAccount(adamSmith);
                 System.out.println("Adam balance:" + accountViewById.getBalance());
             }
             latch.countDown();
@@ -26,7 +26,7 @@ public class ConcurrencyTest {
         Thread johnThread = new Thread(() -> {
             for (int i = 0; i < 1000; i++) {
                 concurrentMoneyTransferController.transfer(johnSmith, adamSmith, BigDecimal.valueOf(10));
-                AccountView accountViewById = concurrentMoneyTransferController.getAccountViewById(johnSmith);
+                Account accountViewById = concurrentMoneyTransferController.getAccount(johnSmith);
                 System.out.println("John balance:" + accountViewById.getBalance());
             }
             latch.countDown();
@@ -37,9 +37,9 @@ public class ConcurrencyTest {
 
         latch.await();
         System.out.println("Final balances:");
-        AccountView adamAccount = concurrentMoneyTransferController.getAccountViewById(adamSmith);
+        Account adamAccount = concurrentMoneyTransferController.getAccount(adamSmith);
         System.out.println("Adam balance:" + adamAccount.getBalance());
-        AccountView johnAccount = concurrentMoneyTransferController.getAccountViewById(johnSmith);
+        Account johnAccount = concurrentMoneyTransferController.getAccount(johnSmith);
         System.out.println("John balance:" + johnAccount.getBalance());
     }
 }

@@ -2,7 +2,7 @@ package com.mazurek.moneytransfer.rest;
 
 import com.google.common.base.Preconditions;
 import com.mazurek.moneytransfer.MoneyTransferController;
-import com.mazurek.moneytransfer.model.AccountView;
+import com.mazurek.moneytransfer.model.Account;
 import com.mazurek.moneytransfer.rest.requests.BalanceChangeRequest;
 import com.mazurek.moneytransfer.rest.responses.BalanceResponse;
 import com.mazurek.moneytransfer.rest.responses.Response;
@@ -14,13 +14,13 @@ public abstract class BalanceChangeHandler extends AbstractPostHandler<BalanceCh
 
 
     @Override
-    Response invokeOkAction(BalanceChangeRequest balanceChangeRequest) {
-        invokeBalanceChange(balanceChangeRequest);
+    Response invokeOkAction(BalanceChangeRequest request) {
+        invokeBalanceChange(request);
 
-        AccountView accountView = moneyTransferController.getAccountViewById(balanceChangeRequest.getAccountId());
+        Account accountView = moneyTransferController.getAccount(request.getAccountId());
         BalanceResponse balanceResponse = new BalanceResponse();
         balanceResponse.setBalance(accountView.getBalance());
-        balanceResponse.setAccountId(balanceChangeRequest.getAccountId());
+        balanceResponse.setAccountId(request.getAccountId());
 
         return balanceResponse;
     }

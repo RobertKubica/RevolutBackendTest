@@ -2,7 +2,6 @@ package com.mazurek.moneytransfer;
 
 import com.google.common.base.Preconditions;
 import com.mazurek.moneytransfer.model.Account;
-import com.mazurek.moneytransfer.model.AccountView;
 import com.mazurek.moneytransfer.model.Person;
 
 import java.math.BigDecimal;
@@ -40,9 +39,6 @@ public class MoneyTransferController {
         return newId;
     }
 
-    public AccountView getAccountViewById(String id) {
-        return getAccount(id);
-    }
 
     public void deposit(String id, BigDecimal amount) {
         validateAmount(amount);
@@ -59,7 +55,7 @@ public class MoneyTransferController {
         account.setBalance(account.getBalance().subtract(amount));
     }
 
-    private Account getAccount(String id) {
+    public Account getAccount(String id) {
         return Optional.ofNullable(accounts.get(id)).orElseThrow(() -> new IllegalArgumentException(String.format("Account with id %s doesn't exist", id)));
     }
 

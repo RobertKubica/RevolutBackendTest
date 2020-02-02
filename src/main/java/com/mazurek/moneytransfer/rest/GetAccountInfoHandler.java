@@ -1,32 +1,33 @@
 package com.mazurek.moneytransfer.rest;
 
-import com.google.gson.Gson;
+import com.google.common.base.Preconditions;
 import com.mazurek.moneytransfer.MoneyTransferController;
-import com.mazurek.moneytransfer.model.AccountView;
-import io.undertow.server.HttpHandler;
-import io.undertow.server.HttpServerExchange;
-import io.undertow.util.PathTemplateMatch;
-import io.undertow.util.StatusCodes;
+import com.mazurek.moneytransfer.model.Account;
+import com.mazurek.moneytransfer.rest.requests.GetAccountInfoRequest;
+import com.mazurek.moneytransfer.rest.responses.AccountViewResponse;
+import com.mazurek.moneytransfer.rest.responses.Response;
 
-class GetAccountInfoHandler implements HttpHandler {
-    private final MoneyTransferController controller;
+import java.util.Map;
 
+class GetAccountInfoHandler extends AbstractGetHandler<GetAccountInfoRequest> {
     public GetAccountInfoHandler(MoneyTransferController controller) {
-        this.controller = controller;
+        super(controller);
     }
 
     @Override
-    public void handleRequest(HttpServerExchange httpServerExchange) throws Exception {
-        PathTemplateMatch pathMatch = httpServerExchange.getAttachment(PathTemplateMatch.ATTACHMENT_KEY);
-        String id = pathMatch.getParameters().get("id");
-        Gson gson = new Gson();
-        try {
-            AccountView body = controller.getAccountViewById(id);
-            httpServerExchange.setStatusCode(StatusCodes.OK);
-            httpServerExchange.getResponseSender().send(gson.toJson(body));
-        } catch (Exception ex) {
-            httpServerExchange.setStatusCode(StatusCodes.NOT_FOUND);
-            httpServerExchange.getResponseSender().send(String.format("Couldn't find account for id: %s (%s)", id, ex.getMessage()));
-        }
+    GetAccountInfoRequest createRequestFromParameters(Map<String, String> parameters) {
+        return new GetAccountInfoRequest(parameters.get("id"));
+    }
+
+
+    @Override
+    Response invokeOkAction(GetAccountInfoRequest request) {
+        Account body = moneyTransferController.getAccount(request.id);
+        return new AccountViewResponse(body.getBalance(), body.getOwner());
+    }
+
+    @Override
+    void validateRequest(GetAccountInfoRequest request) throws IllegalArgumentException {
+        Preconditions.checkArgument(request.getId() != null, "Id cannot be null");
     }
 }

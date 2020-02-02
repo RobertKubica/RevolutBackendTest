@@ -13,8 +13,8 @@ class CreateAccountHandler extends AbstractPostHandler<CreateAccountRequest> {
 
 
     @Override
-    Response invokeOkAction(CreateAccountRequest createAccountRequest) {
-        String accountId = moneyTransferController.createAccount(createAccountRequest.getOwner(), createAccountRequest.getPhoneNumber());
+    Response invokeOkAction(CreateAccountRequest request) {
+        String accountId = moneyTransferController.createAccount(request.getOwner(), request.getPhoneNumber());
         CreateAccountResponse response = new CreateAccountResponse(accountId);
         return response;
     }

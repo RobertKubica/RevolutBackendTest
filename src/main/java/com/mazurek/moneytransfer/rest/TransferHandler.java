@@ -2,7 +2,7 @@ package com.mazurek.moneytransfer.rest;
 
 import com.google.common.base.Preconditions;
 import com.mazurek.moneytransfer.MoneyTransferController;
-import com.mazurek.moneytransfer.model.AccountView;
+import com.mazurek.moneytransfer.model.Account;
 import com.mazurek.moneytransfer.rest.requests.TransferRequest;
 import com.mazurek.moneytransfer.rest.responses.BalanceResponse;
 import com.mazurek.moneytransfer.rest.responses.Response;
@@ -13,13 +13,13 @@ public class TransferHandler extends AbstractPostHandler<TransferRequest> {
     }
 
     @Override
-    Response invokeOkAction(TransferRequest transferRequest) {
-        moneyTransferController.transfer(transferRequest.getSourceAccountId(), transferRequest.getTargetAccountId(), transferRequest.getAmount());
+    Response invokeOkAction(TransferRequest request) {
+        moneyTransferController.transfer(request.getSourceAccountId(), request.getTargetAccountId(), request.getAmount());
 
-        AccountView accountView = moneyTransferController.getAccountViewById(transferRequest.getSourceAccountId());
+        Account accountView = moneyTransferController.getAccount(request.getSourceAccountId());
         BalanceResponse balanceResponse = new BalanceResponse();
         balanceResponse.setBalance(accountView.getBalance());
-        balanceResponse.setAccountId(transferRequest.getSourceAccountId());
+        balanceResponse.setAccountId(request.getSourceAccountId());
 
         return balanceResponse;
     }
